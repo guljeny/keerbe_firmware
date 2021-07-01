@@ -1,0 +1,7 @@
+#bin/bash
+
+# rshell -f ./bin/flash_script
+
+cp ./code.py /Volumes/CIRCUITPY/code.py
+cp -r ./lib/ /Volumes/CIRCUITPY/lib/
+cp -r ./modules/ /Volumes/CIRCUITPY/modules/
