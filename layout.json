@@ -1,4 +1,22 @@
-[
-    ["SHIFT", "W"],
-    ["A", "S"]
-]
+{
+  "layout": {
+    "default": [
+      ["LAYOUT_1", "W"],
+      ["W", "S"]
+    ],
+    "LAYOUT_1": [
+      ["LAYOUT_1", ""],
+      ["PLAY_PAUSE", "W"]
+    ]
+  },
+  "key_map": [
+    {
+      "combination": ["LAYOUT_1", "W"],
+      "command": "SHOW_GAME"
+    },
+    {
+      "combination": ["W", "S"],
+      "command": "A"
+    }
+  ]
+}
