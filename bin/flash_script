@@ -1,2 +1,0 @@
-cp ./main.py /pyboard/main.py
-cp -r ./lib/ /pyboard/
