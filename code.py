@@ -1,22 +1,24 @@
-# import digitalio
-# import random
-import board
-# import usb_hid
 # import time
-# import adafruit_ssd1306
-# import busio
-# import digitalio
-# import displayio
-# import adafruit_displayio_ssd1306
-# import terminalio
-# from adafruit_display_text import label
-# from adafruit_display_shapes import rect
-from modules import kbd
 
-ROW_PINS    = [board.GP0]
-COLUMN_PINS = [board.GP1]
+from modules.key_listener import KeyListener
+from modules.keyboard import keyboard
+from controllers.keyboardController import keyboard_controller
+from constants import CONFIG_FILE, ROW_PINS, COLUMN_PINS
+from modules.event_loop import event_loop
 
-keyboard = kbd.Kbd(ROW_PINS, COLUMN_PINS)
+KeyListener(ROW_PINS, COLUMN_PINS, keyboard_controller.handle_key)
 
-while True:
-    keyboard.check()
+event_loop.start_ifinity_loop()
+
+# def test():
+#     i = 100000
+#     startTime = time.monotonic()
+#     while i > 0:
+#         i -= 1
+#     endTime = time.monotonic()
+#     return endTime - startTime
+
+# print(test())
+
+# while True:
+#     print("check", time.monotonic())

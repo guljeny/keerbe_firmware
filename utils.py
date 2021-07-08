@@ -26,3 +26,15 @@ def reduce(function, iterable, initializer=None):
     for element in it:
         value = function(value, element)
     return value
+
+def compare_arrays (a1, a2):
+    a1.sort()
+    a2.sort()
+    return a1 == a2
+
+def clear_display_group (group):
+    groups_to_remove = []
+    for gr in group:
+        groups_to_remove.append(gr)
+    for gr in groups_to_remove:
+        group.remove(gr)

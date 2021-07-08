@@ -1,129 +1,52 @@
-import digitalio
-import board
 import usb_hid
-import json
-from functools import reduce
-from adafruit_hid.keyboard import Keyboard
 from adafruit_hid.keycode import Keycode
 from adafruit_hid.consumer_control_code import ConsumerControlCode
+from adafruit_hid.keyboard import Keyboard as KeyboardControl
 from adafruit_hid.consumer_control import ConsumerControl
+from constants import DEFAULT_LAYOUT_KEY, GAME_PLAY_BUTTON, SHOW_GAME_BUTTON, LAYOUT_CONFIG
+from controllers.keyboardController import keyboard_controller
+from modules.flappyDotGame import FlappyDotGame
+from modules.display_info import display_info
 
-DEFAULT_LAYOUT_KEY = "default"
-ROW_PINS    = [board.GP0, board.GP1]
-COLUMN_PINS = [board.GP2, board.GP3]
-
-config_file = open('../layout.json')
-config_data = config_file.read()
-config = json.loads(config_data)
-print(config)
-layout_config = config.get('layout', {})
-key_map = config.get('key_map', [])
-print(layout_config)
-
-layout_key = DEFAULT_LAYOUT_KEY
-pressed_keys = []
-released_keys = {}
-media_key_pressed = None
-
-
-kbd = Keyboard(usb_hid.devices)
+keyboard_control = KeyboardControl(usb_hid.devices)
 consumer_control = ConsumerControl(usb_hid.devices)
 
-row_pins    = []
-column_pin = []
 
-def show_game ():
-    print("It's show game function")
+flappyDotGame = FlappyDotGame()
 
-SYS_ACTIONS = {
-    "SHOW_GAME": show_game
-}
+class Keyboard ():
+    def __init__(self):
+        self.is_game_mode = False
+        self.__media_key_pressed = None
+        keyboard_controller.subscribe(self.__handle_key_press)
+        display_info.show()
 
-for pin in ROW_PINS:
-    row = digitalio.DigitalInOut(pin)
-    row.direction = digitalio.Direction.OUTPUT
-    row_pins.append(row)
+    def __handle_key_press (self, key_name, key_value):
+        action = "press" if key_value else "release"
+        key_code = getattr(Keycode, key_name, None)
+        consumer_key_code = getattr(ConsumerControlCode, key_name, None)
 
-for pin in COLUMN_PINS:
-    column = digitalio.DigitalInOut(pin)
-    column.direction = digitalio.Direction.INPUT
-    column.pull = digitalio.Pull.DOWN
-    column_pin.append(column)
-
-def key_press (key_name):
-    global media_key_pressed
-    global layout_key
-    global SYS_ACTIONS
-
-    key_code = getattr(Keycode, key_name, None)
-    consumer_key_code = getattr(ConsumerControlCode, key_name, None)
-    print("press key", key_name)
-
-    if key_code:
-        kbd.press(key_code)
-    elif consumer_key_code:
-        if media_key_pressed:
-            key_release(media_key_pressed)
-        media_key_pressed = key_name
-        consumer_control.press(consumer_key_code)
-    elif key_name in SYS_ACTIONS:
-        SYS_ACTIONS[key_name]()
-    elif key_name in layout_config:
-        layout_key = key_name
-
-def key_release (key_name):
-    global media_key_pressed
-    if not key_name: return
-    key_code = getattr(Keycode, key_name, None)
-    consumer_key_code = getattr(ConsumerControlCode, key_name, None)
-    print("release key: ", key_name)
-
-    if key_code:
-        kbd.release(key_code)
-    elif consumer_key_code:
-        media_key_pressed = None
-        consumer_control.release()
-    elif key_name in layout_config:
-        layout_key = DEFAULT_LAYOUT_KEY
-
-def compare_arrays (a1, a2):
-    a1.sort()
-    a2.sort()
-    return a1 == a2
-
-def get_combination (key_name, pressed_keys):
-    for key_group in key_map:
-        if compare_arrays(key_group.get('combination', None), pressed_keys):
-            return key_group.get('command', None)
-    return None
-
-def loop():
-    global pressed_keys
-    global released_keys
-    global layout_key
-
-    layout = layout_config[layout_key]
-
-    if layout:
-        for row_index in range(len(row_pins)):
-            row = row_pins[row_index]
-            row.value = True
-            for column_index in range(len(column_pin)):
-                column = column_pin[column_index]
-                key_name = layout[row_index][column_index]
-                if column.value:
-                    if key_name not in pressed_keys:
-                        pressed_keys.append(key_name)
-                        key_name = get_combination(key_name, pressed_keys) or key_name
-                        key_press(key_name)
+        if key_value:
+            if self.is_game_mode:
+                if key_name == GAME_PLAY_BUTTON:
+                    return flappyDotGame.action_button_press()
                 else:
-                    released_keys[key_name] = released_keys[key_name] + 1 if released_keys.get(key_name, None) else 1
-            row.value = False
+                    self.is_game_mode = False
+                    flappyDotGame.stop_game()
+                    display_info.show()
+            elif not self.is_game_mode and key_name == SHOW_GAME_BUTTON:
+                self.is_game_mode = True
+                flappyDotGame.start_game()
 
-    for key_name, released_count in released_keys.items():
-        total_keys = reduce(lambda acc, row: acc + row.count(key_name), layout, 0)
-        if released_keys[key_name] == total_keys and key_name in pressed_keys:
-            pressed_keys.remove(key_name)
-            key_release(key_name)
-            key_release(get_combination(key_name, pressed_keys + [key_name]))
-    released_keys = {}
+        if key_code:
+            getattr(keyboard_control, action)(key_code)
+        elif consumer_key_code:
+            if self.__media_key_pressed and key_value:
+                self.__send_key(self.__media_key_pressed, False)
+            self.__media_key_pressed = key_name
+            getattr(consumer_control, "action")(consumer_key_code)
+        elif key_name in LAYOUT_CONFIG:
+            layout = LAYOUT_CONFIG[key_name] if key_value else LAYOUT_CONFIG[DEFAULT_LAYOUT_KEY]
+            keyboard_controller.set_layout(layout)
+
+keyboard = Keyboard()
