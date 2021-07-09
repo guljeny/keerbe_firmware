@@ -34,10 +34,8 @@ class KeyListener():
                 if value:
                     if key_position not in self.pressed_keys:
                         self.pressed_keys.append(key_position)
-                        print("key_listener.press:", value, row_index, column_index)
                         self.handle_key(value, row_index, column_index)
                 elif key_position in self.pressed_keys:
                     self.pressed_keys.remove(key_position)
-                    print("key_listener.release:", value, row_index, column_index)
                     self.handle_key(value, row_index, column_index)
             row.value = False
