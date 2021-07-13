@@ -38,3 +38,24 @@ def clear_display_group (group):
         groups_to_remove.append(gr)
     for gr in groups_to_remove:
         group.remove(gr)
+
+def number_to_array (number):
+    number_array = []
+    for digit in list(str(number)):
+        number_array.append(int(digit))
+
+    return number_array
+
+def bytearray_to_number (bytearray):
+    str_number = ''
+    for byte in bytearray:
+        str_number += str(byte)
+
+    return int(str_number)
+
+def bytearray_to_number_array (bytearray):
+    array = []
+    for byte in bytearray:
+        array.append(int(byte))
+
+    return array
