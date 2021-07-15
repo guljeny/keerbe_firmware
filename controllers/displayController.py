@@ -20,7 +20,16 @@ class DisplayController():
         display.show(self.main_screen)
 
     def show(self, group):
-        clear_display_group(self.main_screen)
-        self.main_screen.append(group)
+        if group not in self.main_screen:
+            clear_display_group(self.main_screen)
+            self.main_screen.append(group)
+
+    def sleep(self):
+        if display.is_awake:
+            display.sleep()
+
+    def wake(self):
+        if not display.is_awake:
+            display.wake()
 
 displayController = DisplayController()

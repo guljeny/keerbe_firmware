@@ -2,9 +2,22 @@ from serial import Serial
 import serial.tools.list_ports
 import os
 
+board_name = "Pico - CircuitPython CDC data"
+board_name_two = "Pico - CircuitPython CDC2 data"
+
+ports = serial.tools.list_ports.comports()
 ports = serial.tools.list_ports.comports()
 
-serial = Serial('/dev/cu.usbmodem14303')
+device_port = '/dev/cu.usbmodem14303'
+# for device, name, description in serial.tools.list_ports.comports():
+#     # print(device, ':', name, ':', description)
+#     if name == board_name or name == board_name_two:
+#         device_port = device
+#         break
+
+print(device_port)
+
+serial = Serial(device_port)
 
 files_to_send = [
     "./code.py",
@@ -13,7 +26,7 @@ files_to_send = [
     "./constants.py",
     "./modules",
     "./controllers",
-    "./lib",
+    # "./lib",
 ]
 
 excluded_files = [
@@ -34,8 +47,8 @@ def await_answer ():
         pass
     return serial.read(serial.in_waiting)
 
-serial.write(b'CLEAN')
-await_answer()
+# serial.write(b'CLEAN')
+# await_answer()
 
 def send_file (file_path):
     print(file_path)

@@ -1,6 +1,6 @@
 import os
 import re
-import supervisor
+import microcontroller
 from usb_cdc import data as serial
 
 class PathInfo ():
@@ -27,6 +27,22 @@ class PathInfo ():
         except OSError:
             pass
 
+def cleanup_dir (path_list = os.listdir('./'), prev_path=""):
+    for path in path_list:
+        current_path = prev_path + (os.sep if prev_path else "") + path
+        path_info = PathInfo(current_path)
+        if path_info.is_dir:
+            cleanup_dir(os.listdir(current_path), current_path)
+            try:
+                os.rmdir(current_path)
+            except OSError:
+                pass
+        else:
+            try:
+                os.remove(current_path)
+            except OSError:
+                pass
+
 def send_ok():
     serial.write(b'OK')
 
@@ -37,24 +53,9 @@ def await_answer ():
 
 def continue_read ():
     if not serial.in_waiting:
-        return False
+        return None
     return serial.read(serial.in_waiting)
 
-def cleanup (path_list = os.listdir('./'), prev_path=""):
-    for path in path_list:
-        current_path = prev_path + (os.sep if prev_path else "") + path
-        path_info = PathInfo(current_path)
-        if path_info.is_dir:
-            cleanup(os.listdir(current_path), current_path)
-            try:
-                os.rmdir(current_path)
-            except OSError:
-                pass
-        else:
-            try:
-                os.remove(current_path)
-            except OSError:
-                pass
 
 def serial_loop():
     if not serial.in_waiting:
@@ -84,7 +85,8 @@ def serial_loop():
         f.close()
         send_ok()
     elif command == b'CLEAN':
-        cleanup()
+        cleanup_dir()
         send_ok()
     elif command == b'REEBOT':
-        supervisor.reload()
+        microcontroller.reset()
+        machine.reset()
