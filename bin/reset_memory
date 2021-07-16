@@ -1,0 +1,7 @@
+#!/usr/bin/env python3
+
+from flash_tool import FlashTool 
+
+flash_tool = FlashTool()
+
+flash_tool.reset_memory()

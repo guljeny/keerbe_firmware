@@ -1,12 +1,13 @@
 import displayio
 import time
 import random
-from constants import DISPLAY_WIDTH, DISPLAY_HEIGHT, DISPLAY_COLOR, GAME_PLAY_BUTTON
+from constants import DISPLAY_WIDTH, DISPLAY_HEIGHT, DISPLAY_COLOR, GAME_PLAY_BUTTON, SAVED_GAME_SCORE_FIRST_BIT, SAVED_GAME_SCORE_LENGTH
 from adafruit_display_shapes.rect import Rect
 from modules.centered_text import centered_text
 from controllers.displayController import displayController
+from controllers.storageController import storage_controller
 from modules.event_loop import event_loop
-from utils import clear_display_group
+from utils import clear_display_group, prepare_to_save, restore_after_save
 
 PLAYER_SIZE = 5
 PLAYER_POSITION = 10
@@ -15,8 +16,7 @@ MIN_PIPE_POS = 2
 PIPE_DISTANTION = 44
 PIPE_WIDTH = 4
 SPEED_MULTIPLIE = 0.001
-INITIAL_SPEED = 1 / 12
-
+INITIAL_SPEED = 1 / 12 
 player_top = int((DISPLAY_HEIGHT - PLAYER_SIZE) / 2)
 
 class FlappyDotGame():
@@ -25,6 +25,7 @@ class FlappyDotGame():
         self.next_redraw_time = 0
         self.speed = INITIAL_SPEED
         self.score = 0
+        self.best_score = 0
         self.player_force = 0
         self.play_blocked_to = 0
         self.next_redraw_time = 0
@@ -38,6 +39,10 @@ class FlappyDotGame():
         self.player_object = Rect(x = PLAYER_POSITION, y = player_top, width = PLAYER_SIZE, height = PLAYER_SIZE, fill = DISPLAY_COLOR)
 
         self.player_layer.append(self.player_object)
+        storage_controller.read(self.__set_game_score, SAVED_GAME_SCORE_LENGTH, SAVED_GAME_SCORE_FIRST_BIT)
+
+    def __set_game_score(self, bytearray_of_score):
+        self.best_score = restore_after_save(bytearray_of_score, True)
 
     def start_game(self):
         displayController.show(self.main_layer)
@@ -82,9 +87,9 @@ class FlappyDotGame():
         self.main_layer.append(self.world_layer)
 
     def __show_start_screen (self):
-        line_one = centered_text("To play press")
+        line_one = centered_text("To play press: " + GAME_PLAY_BUTTON)
         line_one.y = 6
-        line_two = centered_text(GAME_PLAY_BUTTON)
+        line_two = centered_text("Best score: " + str(self.best_score))
         line_two.y = 24
         self.text_layer.append(line_one)
         self.text_layer.append(line_two)
@@ -93,13 +98,16 @@ class FlappyDotGame():
     def __game_over(self):
         self.game_run = False
         self.play_blocked_to = time.monotonic() + 1.7
+        if self.score > self.best_score:
+            self.best_score = self.score
+            storage_controller.write(prepare_to_save(self.best_score, SAVED_GAME_SCORE_LENGTH), SAVED_GAME_SCORE_FIRST_BIT)
 
         clear_display_group(self.text_layer)
         clear_display_group(self.main_layer)
 
         line_one = centered_text("Game over!")
         line_one.y = 6
-        line_two = centered_text("Score: " + str(self.score))
+        line_two = centered_text("Score: " + str(self.score) + ". Best: " + str(self.best_score))
         line_two.y = 24
         self.text_layer.append(line_one)
         self.text_layer.append(line_two)

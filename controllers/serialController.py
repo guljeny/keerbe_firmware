@@ -1,47 +1,14 @@
 import os
 import re
 import microcontroller
+import time
+from constants import MEMORY_SIZE
 from usb_cdc import data as serial
+from controllers.storageController import storage_controller
+from modules.file_system import PathInfo, cleanup_dir
 
-class PathInfo ():
-    def __init__(self, path):
-        self.path = path.replace('./', '')
-        parts = self.path.split('/')
-        dir_parts = parts[:-1] if len(parts) else []
-        self.is_dir = False
-        try:
-            os.listdir(path)
-            self.is_dir = True
-        except OSError:
-            pass
-
-        self.prev_dirs = []
-        for dir in dir_parts:
-            self.prev_dirs.append((self.prev_dirs[-1] if len(self.prev_dirs) else ".") + os.sep + dir)
-
-        self.dir = (os.sep).join(dir_parts) if len(dir_parts) else ""
-        self.parent_dir_exists = False
-        try:
-            len(os.listdir(self.dir))
-            self.parent_dir_exists = True
-        except OSError:
-            pass
-
-def cleanup_dir (path_list = os.listdir('./'), prev_path=""):
-    for path in path_list:
-        current_path = prev_path + (os.sep if prev_path else "") + path
-        path_info = PathInfo(current_path)
-        if path_info.is_dir:
-            cleanup_dir(os.listdir(current_path), current_path)
-            try:
-                os.rmdir(current_path)
-            except OSError:
-                pass
-        else:
-            try:
-                os.remove(current_path)
-            except OSError:
-                pass
+serial.reset_input_buffer()
+serial.reset_output_buffer()
 
 def send_ok():
     serial.write(b'OK')
@@ -74,7 +41,6 @@ def serial_loop():
 
         path_info = PathInfo(path)
         if not path_info.parent_dir_exists:
-            print('create_dir', path_info.prev_dirs)
             for prev_dir in path_info.prev_dirs:
                 try:
                     os.mkdir(prev_dir)
@@ -87,6 +53,11 @@ def serial_loop():
     elif command == b'CLEAN':
         cleanup_dir()
         send_ok()
-    elif command == b'REEBOT':
+    elif command == b'RESET_MEMORY':
+        storage_controller.sync_write([0] * MEMORY_SIZE)
+        time.sleep(1)
         microcontroller.reset()
-        machine.reset()
+    elif command == b'TYPE':
+        serial.write(b'KEEBEE.1')
+    elif command == b'REBOOT':
+        microcontroller.reset()

@@ -5,8 +5,8 @@
       ["W", "S"]
     ],
     "LAYOUT_1": [
-      ["LAYOUT_1", ""],
-      ["PLAY_PAUSE", "W"]
+      ["LAYOUT_1", "W"],
+      ["W", "DISABLE_DISPLAY"]
     ]
   },
   "key_map": [

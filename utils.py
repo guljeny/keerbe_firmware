@@ -46,16 +46,30 @@ def number_to_array (number):
 
     return number_array
 
-def bytearray_to_number (bytearray):
-    str_number = ''
-    for byte in bytearray:
-        str_number += str(byte)
-
-    return int(str_number)
-
-def bytearray_to_number_array (bytearray):
+def restore_after_save (bytearray, as_int = False):
     array = []
     for byte in bytearray:
-        array.append(int(byte))
+        str_byte = str(byte)
+        if len(str_byte) == 2:
+            array.append(str_byte[0] if as_int else int(str_byte[0]))
+            array.append(str_byte[1] if as_int else int(str_byte[1]))
+        else:
+            array.append('0' if as_int else 0)
+            array.append(str_byte if as_int else int(str_byte))
 
+    if as_int:
+        return int(('').join(array))
     return array
+
+def prepare_to_save (value, size = None):
+    if type(value) == int:
+        value = number_to_array(value)
+    doubled = []
+    for i, val in enumerate(value):
+        if not i%2:
+            second_value = value[i + 1] if i + 1 < len(value) else ''
+            merged_int = str(val) + str(second_value)
+            doubled.append(int(merged_int))
+    if size and size - len(doubled) > 0:
+        doubled = [0] * (size - len(doubled)) + doubled
+    return doubled

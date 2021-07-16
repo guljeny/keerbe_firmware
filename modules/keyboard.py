@@ -4,14 +4,12 @@ from adafruit_hid.keycode import Keycode
 from adafruit_hid.consumer_control_code import ConsumerControlCode
 from adafruit_hid.keyboard import Keyboard as KeyboardControl
 from adafruit_hid.consumer_control import ConsumerControl
-from constants import DEFAULT_LAYOUT_KEY, GAME_PLAY_BUTTON, SHOW_GAME_BUTTON, DISABLE_DISPLAY_BUTTON, LAYOUT_CONFIG
+from constants import DEFAULT_LAYOUT_KEY, GAME_PLAY_BUTTON, SHOW_GAME_BUTTON, DISABLE_DISPLAY_BUTTON, LAYOUT_CONFIG, TIME_TO_DISPLAY_SLEEP
 from controllers.keyboardController import keyboard_controller
 from controllers.displayController import displayController
 from modules.flappyDotGame import FlappyDotGame
 from modules.display_info import display_info
 from modules.event_loop import event_loop
-
-time_to_display_sleep = 30.0
 
 keyboard_control = KeyboardControl(usb_hid.devices)
 consumer_control = ConsumerControl(usb_hid.devices)
@@ -67,7 +65,7 @@ class Keyboard ():
             keyboard_controller.set_layout(layout)
 
     def __keyboard_loop(self):
-        if self.last_awake_time + time_to_display_sleep < time.monotonic():
+        if self.last_awake_time + TIME_TO_DISPLAY_SLEEP < time.monotonic():
             displayController.sleep()
 
 keyboard = Keyboard()

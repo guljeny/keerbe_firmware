@@ -6,7 +6,7 @@ from controllers.keyboardController import keyboard_controller
 from controllers.displayController import displayController
 from controllers.storageController import storage_controller
 from modules.centered_text import centered_text
-from utils import clear_display_group, number_to_array, bytearray_to_number_array
+from utils import clear_display_group, restore_after_save, prepare_to_save
 from constants import LAYOUT_CONFIG, DISPLAY_COLOR, DISPLAY_WIDTH, DEFAULT_LAYOUT_KEY, SAVED_KEY_PRESSED_FIRST_BIT, SAVED_KEY_PRESSED_LENGTH
 
 delay_beetween_spm_groups = 1.3
@@ -45,7 +45,7 @@ class DisplayInfo():
         storage_controller.read(self.__set_pressed_keys, SAVED_KEY_PRESSED_LENGTH, SAVED_KEY_PRESSED_FIRST_BIT)
 
     def __set_pressed_keys (self, bytearray_of_pressed_keys):
-        self.pressed_counter_list = bytearray_to_number_array(bytearray_of_pressed_keys)
+        self.pressed_counter_list = restore_after_save(bytearray_of_pressed_keys)
         self.__update_keyboard_stats()
 
     def __increment_pressed_keys_count(self, index = 0):
@@ -63,7 +63,7 @@ class DisplayInfo():
         if key_value:
             self.__increment_pressed_keys_count()
 
-            storage_controller.write(self.pressed_counter_list, SAVED_KEY_PRESSED_FIRST_BIT)
+            storage_controller.write(prepare_to_save(self.pressed_counter_list), SAVED_KEY_PRESSED_FIRST_BIT)
             now = time.monotonic()
             if now - self.last_symbol_typed > delay_beetween_spm_groups:
                 self.start_spm_group = now
