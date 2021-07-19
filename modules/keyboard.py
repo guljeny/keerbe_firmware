@@ -4,7 +4,8 @@ from adafruit_hid.keycode import Keycode
 from adafruit_hid.consumer_control_code import ConsumerControlCode
 from adafruit_hid.keyboard import Keyboard as KeyboardControl
 from adafruit_hid.consumer_control import ConsumerControl
-from constants import DEFAULT_LAYOUT_KEY, GAME_PLAY_BUTTON, SHOW_GAME_BUTTON, DISABLE_DISPLAY_BUTTON, LAYOUT_CONFIG, TIME_TO_DISPLAY_SLEEP
+from constants import DEFAULT_LAYOUT_KEY, SHOW_GAME_BUTTON, DISABLE_DISPLAY_BUTTON
+from config import GAME_PLAY_BUTTON, LAYOUT_CONFIG, TIME_TO_DISPLAY_SLEEP
 from controllers.keyboardController import keyboard_controller
 from controllers.displayController import displayController
 from modules.flappyDotGame import FlappyDotGame

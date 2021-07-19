@@ -7,7 +7,8 @@ from controllers.displayController import displayController
 from controllers.storageController import storage_controller
 from modules.centered_text import centered_text
 from utils import clear_display_group, restore_after_save, prepare_to_save
-from constants import LAYOUT_CONFIG, DISPLAY_COLOR, DISPLAY_WIDTH, DEFAULT_LAYOUT_KEY, SAVED_KEY_PRESSED_FIRST_BIT, SAVED_KEY_PRESSED_LENGTH
+from constants import DISPLAY_COLOR, DISPLAY_WIDTH, DEFAULT_LAYOUT_KEY, SAVED_KEY_PRESSED_FIRST_BIT, SAVED_KEY_PRESSED_LENGTH
+from config import LAYOUT_CONFIG
 
 delay_beetween_spm_groups = 1.3
 

@@ -10,6 +10,7 @@ files_to_send = [
     "./boot.py",
     "./utils.py",
     "./constants.py",
+    "./config.py",
     "./modules",
     "./controllers",
     # "./lib",

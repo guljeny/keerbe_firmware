@@ -1,7 +1,8 @@
 import displayio
 import time
 import random
-from constants import DISPLAY_WIDTH, DISPLAY_HEIGHT, DISPLAY_COLOR, GAME_PLAY_BUTTON, SAVED_GAME_SCORE_FIRST_BIT, SAVED_GAME_SCORE_LENGTH
+from constants import DISPLAY_WIDTH, DISPLAY_HEIGHT, DISPLAY_COLOR, SAVED_GAME_SCORE_FIRST_BIT, SAVED_GAME_SCORE_LENGTH
+from config import GAME_PLAY_BUTTON
 from adafruit_display_shapes.rect import Rect
 from modules.centered_text import centered_text
 from controllers.displayController import displayController

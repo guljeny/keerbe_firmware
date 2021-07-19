@@ -1,7 +1,7 @@
 {
   "layout": {
     "default": [
-      ["LAYOUT_1", "W"],
+      ["LAYOUT_1", "W", "", "D"],
       ["W", "S"]
     ],
     "LAYOUT_1": [

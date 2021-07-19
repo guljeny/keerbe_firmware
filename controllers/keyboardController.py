@@ -1,5 +1,6 @@
 from utils import compare_arrays
-from constants import DEFAULT_LAYOUT_KEY, LAYOUT_CONFIG, KEY_MAP
+from constants import DEFAULT_LAYOUT_KEY
+from config import LAYOUT_CONFIG, KEY_MAP
 
 class KeyboardController():
     def __init__(self, layout, key_map = []):
@@ -21,8 +22,14 @@ class KeyboardController():
                 fn(key_name, key_value)
 
     def handle_key (self, key_value, row, column):
-        key_name = self.layout[row][column]
-        # print(self.layout, key_name, key_value, row, column)
+        try:
+            key_name = self.layout[row][column]
+        except IndexError:
+            return
+
+        if not key_name:
+            return
+
         if key_value and key_name not in self.__pressed_keys:
             self.__pressed_keys.append(key_name)
             key_name = self.__get_combination() or key_name
