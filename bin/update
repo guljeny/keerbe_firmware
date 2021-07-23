@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 
-import os
-from flash_tool import FlashTool 
+import os, time, sys
+from flash_tool import FlashTool, prepare_path
 
-flash_tool = FlashTool()
+flash_tool = FlashTool(sys.argv[1])
 
 files_to_send = [
     "./code.py",
@@ -21,15 +21,44 @@ excluded_files = [
     ".DS_Store",
 ]
 
-def send_file_list(files_list, prev_path = ""):
-    for path_dir in files_list:
-        current_path = os.path.join(prev_path, path_dir)
-        if path_dir not in excluded_files and current_path not in excluded_files:
-            if os.path.isdir(current_path):
-                send_file_list(os.listdir(current_path), current_path)
-            else:
-                flash_tool.send_file(current_path)
+def map_files(cb, files_list=files_to_send):
+    def map_dir(files_list, prev_path = ""):
+        for path_dir in files_list:
+            current_path = os.path.join(prev_path, path_dir)
+            real_path = prepare_path(current_path)
+            if path_dir not in excluded_files and current_path not in excluded_files:
+                if os.path.isdir(real_path):
+                    map_dir(os.listdir(real_path), current_path)
+                else:
+                    cb(current_path)
+    map_dir(files_list)
 
-# flash_tool.clean()
-send_file_list(files_to_send)
+count = 0
+
+def incrase_count (p):
+    global count
+    count += 1
+
+map_files(incrase_count)
+
+print(count)
+sys.stdout.flush()
+time.sleep(0.1)
+
+# def send_file_list(files_list, prev_path = ""):
+#     for path_dir in files_list:
+#         current_path = os.path.join(prev_path, path_dir)
+#         if path_dir not in excluded_files and current_path not in excluded_files:
+#             if os.path.isdir(current_path):
+#                 send_file_list(os.listdir(current_path), current_path)
+#             else:
+#                 flash_tool.send_file(current_path)
+
+# # flash_tool.clean()
+# send_file_list(files_to_send)
+map_files(flash_tool.send_file)
+
+print("END")
+sys.stdout.flush()
+
 flash_tool.reboot()

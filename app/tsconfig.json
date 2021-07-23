@@ -1,0 +1,37 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "ESNext",
+    "jsx": "react",
+    "strict": true,
+    "noImplicitAny": false,
+    "moduleResolution": "node",
+    "plugins": [{
+      "name": "typescript-plugin-css-modules",
+      "options": {
+        "customMatcher": "\\.m\\.scss$"
+      }
+    }],
+    "skipLibCheck": true,
+    "baseUrl": "src",
+    "rootDir": "src",
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "paths": {
+      "actions": ["/actions/*"],
+      "modules": ["/modules/*"],
+      "components": ["/components/*"],
+      "constants": ["/constants/*"],
+      "utils": ["/utils/*"],
+      "reducers/*": ["/reducers/*"],
+      "images/*": ["/images/*"],
+      "sagas/*": ["/sagas/*"],
+      "hooks/": ["/hooks/*"],
+      "styles": ["/styles/*"],
+      "types": ["/types/*"],
+      "api": ["/api/*"],
+      "root/*": ["*"]
+    },
+    "forceConsistentCasingInFileNames": true
+  }
+}

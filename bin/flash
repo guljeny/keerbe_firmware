@@ -1,13 +1,11 @@
 #bin/bash
 
-# rshell -f ./bin/flash_script
-
 cp ./code.py /Volumes/CIRCUITPY/code.py
 cp ./boot.py /Volumes/CIRCUITPY/boot.py
 cp ./layout.json /Volumes/CIRCUITPY/layout.json
 cp ./utils.py /Volumes/CIRCUITPY/utils.py
 cp ./constants.py /Volumes/CIRCUITPY/constants.py
 cp ./config.py /Volumes/CIRCUITPY/config.py
-# cp -r ./lib/ /Volumes/CIRCUITPY/lib/
+cp -r ./lib/ /Volumes/CIRCUITPY/lib/
 cp -r ./modules/ /Volumes/CIRCUITPY/modules/
 cp -r ./controllers/ /Volumes/CIRCUITPY/controllers/

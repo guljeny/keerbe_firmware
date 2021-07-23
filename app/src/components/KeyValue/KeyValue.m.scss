@@ -1,0 +1,14 @@
+@import "styles/vars.m.scss";
+
+.image {
+  width: 100%;
+  max-width: 20px;
+  svg {
+    width: 20px;
+    fill: $main-light;
+  }
+}
+
+.text {
+  color: $main-light;
+}

@@ -1,9 +1,9 @@
 import json
 import board
 
-DEFAULT_LAYOUT_KEY = "default"
+DEFAULT_LAYOUT_KEY = "DEFAULT"
 ROW_PINS    = [board.GP0]
-COLUMN_PINS = [board.GP1, board.GP2]
+COLUMN_PINS = [board.GP1, board.GP2, board.GP12, board.GP13, board.GP14, board.GP15]
 
 MEMORY_SIZE = 16
 

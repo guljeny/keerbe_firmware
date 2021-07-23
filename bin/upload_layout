@@ -1,8 +1,16 @@
 #!/usr/bin/env python3
 
+import sys, time
 from flash_tool import FlashTool 
 
-flash_tool = FlashTool()
+print("1")
+sys.stdout.flush()
+time.sleep(0.1)
 
-flash_tool.send_file("./layout.json")
+flash_tool = FlashTool(sys.argv[1])
+
+flash_tool.send_file("./layout.json", sys.argv[2])
+print("END")
+sys.stdout.flush()
+
 flash_tool.reboot()

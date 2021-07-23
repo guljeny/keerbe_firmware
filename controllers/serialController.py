@@ -6,6 +6,7 @@ from constants import MEMORY_SIZE
 from usb_cdc import data as serial
 from controllers.storageController import storage_controller
 from modules.file_system import PathInfo, cleanup_dir
+from config import config_data
 
 serial.reset_input_buffer()
 serial.reset_output_buffer()
@@ -28,6 +29,7 @@ def serial_loop():
     if not serial.in_waiting:
         return
     command = serial.read(serial.in_waiting)
+    print(command)
     if command == b'FLASH':
         send_ok()
         file_path = await_answer()
@@ -58,6 +60,13 @@ def serial_loop():
         time.sleep(1)
         microcontroller.reset()
     elif command == b'TYPE':
-        serial.write(b'KEEBEE.1')
+        serial.write(b'KEEBEE_1')
+    elif command == b'LAYOUT':
+        for l in config_data:
+            serial.write(l.encode())
     elif command == b'REBOOT':
         microcontroller.reset()
+    elif command:
+        print('delete', command)
+        serial.reset_input_buffer()
+        serial.reset_output_buffer()

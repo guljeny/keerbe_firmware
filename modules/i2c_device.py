@@ -3,7 +3,7 @@ import displayio
 import adafruit_displayio_ssd1306
 from modules.i2c_bus import I2CBus
 from controllers.uartController import UartController
-from constants import EXTERNAL_SCL, EXTERNAL_SDA, DISPLAY_ADDRESS, MEMORY_ADDRESS, DISPLAY_WIDTH, DISPLAY_HEIGHT, SECOND_PART_RX, SECOND_PART_TX
+from constants import EXTERNAL_SCL, EXTERNAL_SDA, DISPLAY_ADDRESS, MEMORY_ADDRESS, DISPLAY_WIDTH, DISPLAY_HEIGHT, SECOND_PART_RX
 
 displayio.release_displays()
 
