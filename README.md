@@ -20,7 +20,7 @@ Ergonomical mechanical keyboard wtitten on circuitPython
 - Download CP7 for your picos https://circuitpython.org/board/raspberry_pi_pico/
 - Connnect first pico with pressed BOOTSEL button to pc (A new drive will show up on your computer)
 - Copy downloaded CP7 file to PICO drive
-- When pico loads again (You see CIRCUITPY drive) run `bin/flash_left` (upload code for left part)
+- When pico loads again (You will see CIRCUITPY drive) run `bin/flash_left` (upload code for left part)
 - Repeat last steps with secod pico, but run `bin/flash` for it (upload code for right, main part)
 
 ## Wiring
@@ -51,6 +51,14 @@ npm i
 npm run build
 npm start
 ```
+
+## Restore keyboard
+If keyboard not boot try to:
+- Unplug USB cable from keyboard
+- Press top-left key on main(right) part
+- Konnect keyboard via usb (You will see CIRCUITPY drive)
+- Start software and press `Restore` button
+- Wait few minutes and try to unplug and plug USB cable
 
 ## Case
 Do it as you'd like, my case is developing now
