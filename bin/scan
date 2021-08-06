@@ -3,6 +3,4 @@
 import sys, time
 from flash_tool import scan 
 
-# while True:
 scan()
-    # time.sleep(1)

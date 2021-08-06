@@ -2,8 +2,8 @@ import json
 import board
 
 DEFAULT_LAYOUT_KEY = "DEFAULT"
-ROW_PINS    = [board.GP0]
-COLUMN_PINS = [board.GP1, board.GP2, board.GP12, board.GP13, board.GP14, board.GP15]
+ROW_PINS    = [board.GP27, board.GP26, board.GP22, board.GP21]
+COLUMN_PINS = [board.GP6, board.GP7, board.GP8, board.GP9, board.GP10, board.GP11]
 
 MEMORY_SIZE = 16
 
@@ -19,10 +19,10 @@ SAVED_GAME_SCORE_LENGTH = 6
 
 DISPLAY_WIDTH = 128
 DISPLAY_HEIGHT = 32
-EXTERNAL_SCL = board.GP5
+SECOND_PART_TX = board.GP0
+SECOND_PART_RX = board.GP1
 EXTERNAL_SDA = board.GP4
-SECOND_PART_TX = board.GP4
-SECOND_PART_RX = board.GP9
+EXTERNAL_SCL = board.GP5
 DISPLAY_COLOR = 0xFFFFFF
 
 SHOW_GAME_BUTTON = "SHOW_GAME"

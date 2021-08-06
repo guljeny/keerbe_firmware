@@ -23,16 +23,8 @@ module.exports = {
       },
       {
         test: /\.svg$/,
-        loader: 'svg-inline-loader'
+        loader: 'svg-inline-loader',
       },
-      // {
-      //   test: /\.svg$/,
-      //   use: [
-      //     {
-      //       loader: 'svg-url-loader',
-      //     },
-      //   ],
-      // },
       {
         test: /\.scss$/,
         use: [
@@ -46,7 +38,7 @@ module.exports = {
                 } : {
                 }),
               },
-            }
+            },
           },
           'sass-loader',
         ],
@@ -55,7 +47,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.resolve(__dirname, 'src/template.html')
+      template: path.resolve(__dirname, 'src/template.html'),
     }),
     new MiniCssExtractPlugin(),
   ],
@@ -77,13 +69,6 @@ module.exports = {
       "root": path.resolve(__dirname, 'src/'),
     },
   },
-  // externals: {
-	  // electron: "require('electron')",
-	  // child_process: 'require("child_process")',
-	  // fs: "require('fs')",
-	  // os: "require('os')",
-	  // path: "require('path')"
-  // },
   devServer: {
     historyApiFallback: true,
     contentBase: path.join(__dirname, 'dist'),

@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "electron ./app.js",
-    "build-dev": "NODE_ENV=development npx webpack --watch",
     "build": "NODE_ENV=production npx webpack",
+    "build:dev": "NODE_ENV=development npx webpack --watch",
     "tsc": "npx tsc --noEmit",
     "lint:js": "npx eslint ./src --ext .ts,.tsx",
     "lint:css": "npx stylelint \"src/**/*.scss\"",

@@ -13,7 +13,7 @@ files_to_send = [
     "./config.py",
     "./modules",
     "./controllers",
-    # "./lib",
+    "./lib",
 ]
 
 excluded_files = [
@@ -45,17 +45,7 @@ print(count)
 sys.stdout.flush()
 time.sleep(0.1)
 
-# def send_file_list(files_list, prev_path = ""):
-#     for path_dir in files_list:
-#         current_path = os.path.join(prev_path, path_dir)
-#         if path_dir not in excluded_files and current_path not in excluded_files:
-#             if os.path.isdir(current_path):
-#                 send_file_list(os.listdir(current_path), current_path)
-#             else:
-#                 flash_tool.send_file(current_path)
-
-# # flash_tool.clean()
-# send_file_list(files_to_send)
+flash_tool.clean()
 map_files(flash_tool.send_file)
 
 print("END")

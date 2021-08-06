@@ -8,7 +8,7 @@ board_name_selector_v2 = "Pico - CircuitPython CDC2 data"
 dir = os.path.dirname(os.path.abspath(__file__))
 
 def prepare_path (path):
-    return os.path.normpath(os.path.join(dir, '../', path))
+    return os.path.normpath(os.path.join(dir, '../firmware/', path))
 
 def check_ok_answer (answer):
     return answer == b'OK'

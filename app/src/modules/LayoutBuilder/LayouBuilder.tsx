@@ -11,7 +11,7 @@ import { KeyboardContext, LayoutContext } from 'constants/context'
 import scanKeyboardService from 'utils/scanKeyboardService'
 import useUploadStateCommand from 'hooks/useUploadStateCommand'
 import typeCasting from 'utils/typeCasting'
-import defaultLayout from '../../../../layout.json'
+import defaultLayout from '../../../../firmware/layout.json'
 
 import styles from './LayoutBuilder.m.scss'
 

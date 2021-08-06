@@ -3,11 +3,6 @@
 import sys, os
 from flash_tool import FlashTool 
 
-# dir = os.path.dirname(os.path.abspath(__file__))
-# layout_path = os.path.normpath(os.path.join(dir, '../layout.json'))
-# layout_file = open(layout_path)
-# layout_data = layout_file.read()
-
 flash_tool = FlashTool(sys.argv[1])
 flash_tool.send_file("./layout.json")
 print("END")
