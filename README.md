@@ -1,6 +1,8 @@
 # keebee
 Ergonomical mechanical keyboard wtitten on circuitPython
 
+![lint](https://github.com/guljeny/keebee/actions/workflows/lint-js.yml/badge.svg)
+
 ## Requirements to build and run software
 - python3
 - node 12+
