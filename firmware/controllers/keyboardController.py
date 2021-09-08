@@ -24,6 +24,10 @@ class KeyboardController():
             return
 
         if key_value and key_name not in self.__pressed_keys:
+            if len(self.__pressed_keys) > 5:
+                self.__send_key(self.__pressed_keys[0], False)
+                self.__pressed_keys.remove(self.__pressed_keys[0])
+
             self.__pressed_keys.append(key_name)
             self.__send_key(key_name, key_value)
         elif not key_value and key_name in self.__pressed_keys:

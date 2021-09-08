@@ -32,6 +32,7 @@ class StorageController():
 
         if len(self.write_tasks):
             data, start_bit = self.write_tasks[0]
+            # print(data, start_bit)
             memory.write(bytes([start_bit] + data))
             self.write_tasks.remove((data, start_bit))
 

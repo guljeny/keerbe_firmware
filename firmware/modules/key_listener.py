@@ -7,7 +7,6 @@ class KeyListener():
         self.rows = []
         self.columns = []
         self.pressed_keys = []
-        self.released_keys = []
 
         for pin in rows:
             row = digitalio.DigitalInOut(pin)
@@ -23,7 +22,6 @@ class KeyListener():
         event_loop.append(self.check)
 
     def check(self):
-        released_keys = []
         for row_index in range(len(self.rows)):
             row = self.rows[row_index]
             row.value = True
