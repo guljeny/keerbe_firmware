@@ -22,6 +22,7 @@ player_top = int((DISPLAY_HEIGHT - PLAYER_SIZE) / 2)
 
 class FlappyDotGame():
     def __init__ (self):
+        self.is_game_enabled = False
         self.game_run = False
         self.next_redraw_time = 0
         self.speed = INITIAL_SPEED
@@ -49,12 +50,14 @@ class FlappyDotGame():
         displayController.show(self.main_layer)
         self.__show_start_screen()
         event_loop.append(self.__game_loop)
+        self.is_game_enabled = True
 
     def stop_game(self):
         self.game_run = False
         clear_display_group(self.text_layer)
         clear_display_group(self.main_layer)
         event_loop.remove(self.__game_loop)
+        self.is_game_enabled = False
 
     def action_button_press (self):
         if self.game_run:
@@ -88,7 +91,7 @@ class FlappyDotGame():
         self.main_layer.append(self.world_layer)
 
     def __show_start_screen (self):
-        line_one = centered_text("To play press: " + GAME_PLAY_BUTTON)
+        line_one = centered_text("Press: " + GAME_PLAY_BUTTON)
         line_one.y = 6
         line_two = centered_text("Best score: " + str(self.best_score))
         line_two.y = 24
