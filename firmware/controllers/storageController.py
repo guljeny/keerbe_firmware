@@ -1,5 +1,5 @@
 import time
-from modules.i2c_device import memory
+from modules.external_device import memory
 from constants import MEMORY_ADDRESS
 from modules.event_loop import event_loop
 
@@ -32,7 +32,6 @@ class StorageController():
 
         if len(self.write_tasks):
             data, start_bit = self.write_tasks[0]
-            # print(data, start_bit)
             memory.write(bytes([start_bit] + data))
             self.write_tasks.remove((data, start_bit))
 

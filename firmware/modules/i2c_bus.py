@@ -7,8 +7,10 @@ class I2CBus():
         self.i2c.writeto_then_readfrom(self.adress, bytearray, result)
 
     def write(self, bytearray):
-        print(self.adress, bytearray)
-        self.i2c.writeto(self.adress, bytearray)
+        try:
+            self.i2c.writeto(self.adress, bytearray)
+        except OSError:
+            return
 
     def try_lock(self):
         return self.i2c.try_lock()
