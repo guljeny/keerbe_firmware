@@ -61,17 +61,20 @@ class Keyboard ():
         key_code = getattr(Keycode, key_name, None)
         consumer_key_code = getattr(ConsumerControlCode, key_name, None)
 
-        if key_code:
-            getattr(keyboard_control, action)(key_code)
-        elif consumer_key_code:
-            if self.__media_key_pressed and key_value:
-                consumer_control.release(self.__media_key_pressed)
-            self.__media_key_pressed = key_name
-            getattr(consumer_control, action)(consumer_key_code)
-        elif key_name in LAYOUT_CONFIG:
-            self.layout = key_name if key_value else DEFAULT_LAYOUT_KEY
-            for pressed_key_name in self.__pressed_keys:
-                pressed_key_code = getattr(Keycode, pressed_key_name, None)
-                if pressed_key_code:
-                    keyboard_control.release(pressed_key_code)
-                    self.__pressed_keys.remove(pressed_key_name)
+        try:
+            if key_code:
+                getattr(keyboard_control, action)(key_code)
+            elif consumer_key_code:
+                if self.__media_key_pressed and key_value:
+                    consumer_control.release(self.__media_key_pressed)
+                self.__media_key_pressed = key_name
+                getattr(consumer_control, action)(consumer_key_code)
+            elif key_name in LAYOUT_CONFIG:
+                self.layout = key_name if key_value else DEFAULT_LAYOUT_KEY
+                for pressed_key_name in self.__pressed_keys:
+                    pressed_key_code = getattr(Keycode, pressed_key_name, None)
+                    if pressed_key_code:
+                        keyboard_control.release(pressed_key_code)
+                        self.__pressed_keys.remove(pressed_key_name)
+        except OSError:
+            pass
