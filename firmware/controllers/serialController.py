@@ -8,8 +8,15 @@ from controllers.storageController import storage_controller
 from modules.file_system import PathInfo, cleanup_dir
 from config import config_data
 
-serial.reset_input_buffer()
-serial.reset_output_buffer()
+def reset_serial():
+    try:
+        serial.reset_input_buffer()
+        serial.reset_output_buffer()
+    except OSError:
+        time.sleep(1)
+        reset_serial()
+
+reset_serial()
 
 def send_ok():
     serial.write(b'OK')
