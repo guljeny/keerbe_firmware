@@ -70,12 +70,16 @@ class Keyboard ():
                 self.__media_key_pressed = key_name
                 getattr(consumer_control, action)(consumer_key_code)
             elif key_name in LAYOUT_CONFIG:
-                layout = key_name if key_value else DEFAULT_LAYOUT_KEY
-                for row_index, row in enumerate(self.layout):
+                next_layout = key_name if key_value else DEFAULT_LAYOUT_KEY
+                curren_layout_config = LAYOUT_CONFIG[self.layout]
+                next_layout_config = LAYOUT_CONFIG[next_layout]
+
+                for row_index, row in enumerate(curren_layout_config):
                     for key_index, key in enumerate(row):
-                        if key in self.__pressed_keys:
+                        pressed_keys_copy = self.__pressed_keys.copy()
+                        if key in pressed_keys_copy:
                             try:
-                                new_key = LAYOUT_CONFIG[layout][row_index][key_index]
+                                new_key = next_layout_config[row_index][key_index]
                                 if new_key != key:
                                     pressed_key_code = getattr(Keycode, key, None)
                                     new_key_key_code = getattr(Keycode, new_key, None)
@@ -87,6 +91,6 @@ class Keyboard ():
                                         self.__pressed_keys.append(new_key)
                             except IndexError:
                                 pass
-                self.layout = layout
+                self.layout = next_layout
         except OSError:
             self.__pressed_keys.remove(key_name)
