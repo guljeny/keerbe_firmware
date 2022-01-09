@@ -1,0 +1,16 @@
+{
+  "files": [
+    "main.py",
+    "boot.py",
+    "layout.json",
+    "utils.py",
+    "constants.py",
+    "config.py",
+    "lib/",
+    "modules/",
+    "controllers/"
+  ],
+  "options": [
+    "KEYBOARD_WITH_DISPLAY = True"
+  ]
+}

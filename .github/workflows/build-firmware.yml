@@ -1,0 +1,28 @@
+name: build-firmware
+
+on: 
+  push:
+    tags:
+    - '*'
+
+jobs:
+  build-firmware:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v2
+      - name: set version variable
+        id: version
+        run: echo "::set-output name=TAG_NAME::$(git describe --tags --abbrev=0)"
+      - name: build firmware
+        run: |
+          bin/build -v ${{ steps.version.outputs.TAG_NAME }} -n KEERBE_SPLIT_1
+          echo "${{ steps.version.outputs.TAG_NAME }}"
+          ls -la ./firmware_dist
+      - name: save artifacts
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "./firmware_dist/KEERBE_SPLIT_1-${{ steps.version.outputs.TAG_NAME }}.zip"
+          removeArtifacts: true
+          token: ${{ secrets.GITHUB_TOKEN }}
