@@ -16,8 +16,12 @@ class DisplayInfo():
     def __init__ (self):
         self.is_display_enabled = True
         self.root_layer = displayio.Group()
-        self.pressed_keys_comma_layer = Label(terminalio.FONT, text="   ,   ,   ,   ", color=DISPLAY_COLOR, x=0, y=6)
-        self.spm_layer = Label(terminalio.FONT, text="SPM: 0", color=DISPLAY_COLOR, x=0, y=24)
+        self.pressed_keys_comma_layer = Label(terminalio.FONT, text="   ,   ,   ,   ")
+        self.pressed_keys_comma_layer.x = 0
+        self.pressed_keys_comma_layer.y = 6
+        self.spm_layer = Label(terminalio.FONT, text="SPM: 0", color=DISPLAY_COLOR)
+        self.spm_layer.x = 0
+        self.spm_layer.y = 24
 
         self.pressed_keys_count_in_array = [0,0,0,0,0,0,0,0,0,0,0,0]
         self.pressed_keys_count_digit_layers = []

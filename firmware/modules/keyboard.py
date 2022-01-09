@@ -5,7 +5,7 @@ from adafruit_hid.consumer_control_code import ConsumerControlCode
 from adafruit_hid.keyboard import Keyboard as KeyboardControl
 from adafruit_hid.consumer_control import ConsumerControl
 from constants import DEFAULT_LAYOUT_KEY, SHOW_GAME_BUTTON, DISABLE_DISPLAY_BUTTON
-from config import GAME_PLAY_BUTTON, LAYOUT_CONFIG, TIME_TO_DISPLAY_SLEEP
+from config import GAME_PLAY_BUTTON, LAYOUT_CONFIG, TIME_TO_DISPLAY_SLEEP, KEYBOARD_WITH_DISPLAY
 from controllers.displayController import displayController
 from modules.flappyDotGame import FlappyDotGame
 from modules.display_info import DisplayInfo
@@ -14,14 +14,15 @@ keyboard_control = KeyboardControl(usb_hid.devices)
 consumer_control = ConsumerControl(usb_hid.devices)
 
 flappyDotGame = FlappyDotGame()
-display_info = DisplayInfo()
 
 class Keyboard ():
     def __init__(self):
         self.__media_key_pressed = None
         self.layout = DEFAULT_LAYOUT_KEY
         self.__pressed_keys = []
-        display_info.show()
+        if KEYBOARD_WITH_DISPLAY:
+            self.display_info = DisplayInfo()
+            self.display_info.show()
     
     def handle_key (self, key_value, row, column):
         try:
@@ -32,17 +33,19 @@ class Keyboard ():
         if not key_name:
             return
 
-        display_info.handle_key_press(key_name, key_value)
+        # Update display_info if keyboard supports display
+        if KEYBOARD_WITH_DISPLAY:
+            self.display_info.handle_key_press(key_name, key_value)
 
-        if key_value:
-            if flappyDotGame.is_game_enabled:
-                if key_name == GAME_PLAY_BUTTON:
-                    return flappyDotGame.action_button_press()
-                else:
-                    flappyDotGame.stop_game()
-                    display_info.show()
-            elif not flappyDotGame.is_game_enabled and key_name == SHOW_GAME_BUTTON:
-                flappyDotGame.start_game()
+            if key_value:
+                if flappyDotGame.is_game_enabled:
+                    if key_name == GAME_PLAY_BUTTON:
+                        return flappyDotGame.action_button_press()
+                    else:
+                        flappyDotGame.stop_game()
+                        self.display_info.show()
+                elif not flappyDotGame.is_game_enabled and key_name == SHOW_GAME_BUTTON:
+                    flappyDotGame.start_game()
 
         if key_value and key_name not in self.__pressed_keys:
             if len(self.__pressed_keys) > 5:

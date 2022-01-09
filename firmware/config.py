@@ -7,3 +7,5 @@ LAYOUT_CONFIG = config.get('layout', [])
 
 GAME_PLAY_BUTTON = config.get('play_button', 'SPACEBAR')
 TIME_TO_DISPLAY_SLEEP = float(config.get('time_to_display_sleep', 40.0))
+KEYBOARD_WITH_DISPLAY = True
+KEYBOARD_NAME = 'KEEBEE_SPLIT_1'

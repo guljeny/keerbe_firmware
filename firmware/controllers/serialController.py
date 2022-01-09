@@ -6,7 +6,7 @@ from constants import MEMORY_SIZE
 from usb_cdc import data as serial
 from controllers.storageController import storage_controller
 from modules.file_system import PathInfo, cleanup_dir
-from config import config_data
+from config import config_data, KEYBOARD_NAME
 
 def reset_serial():
     try:
@@ -67,7 +67,7 @@ def serial_loop():
         time.sleep(1)
         microcontroller.reset()
     elif command == b'TYPE':
-        serial.write(b'KEEBEE_1')
+        serial.write(KEYBOARD_NAME.encode())
     elif command == b'LAYOUT':
         for l in config_data:
             serial.write(l.encode())
