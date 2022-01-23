@@ -6,6 +6,7 @@
     "utils.py",
     "constants.py",
     "config.py",
+    "flash.py",
     "lib/",
     "modules/",
     "controllers/"

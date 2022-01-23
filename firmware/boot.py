@@ -18,7 +18,7 @@ storage.remount("/", readonly = False, disable_concurrent_write_protection = Tru
 supervisor.disable_autoreload()
 
 
-if not button.value:
+if button.value:
     usb_cdc.enable(console=True, data=True)
     supervisor.set_next_code_file('./flash.py')
 else:

@@ -1,11 +1,11 @@
 #bin/bash
 
-cp ./firmware/code.py /Volumes/CIRCUITPY/code.py
-# cp ./firmware/boot.py /Volumes/CIRCUITPY/boot.py
-# cp ./firmware/layout.json /Volumes/CIRCUITPY/layout.json
-cp ./firmware/utils.py /Volumes/CIRCUITPY/utils.py
-cp ./firmware/constants.py /Volumes/CIRCUITPY/constants.py
-cp ./firmware/config.py /Volumes/CIRCUITPY/config.py
-# cp -r ./firmware/lib/ /Volumes/CIRCUITPY/lib/
-cp -r ./firmware/modules/ /Volumes/CIRCUITPY/modules/
-cp -r ./firmware/controllers/ /Volumes/CIRCUITPY/controllers/
+cp ./firmware_dist/KEERBE_SPLIT_1.0.0/main.py /Volumes/CIRCUITPY/main.py
+cp ./firmware_dist/KEERBE_SPLIT_1-1.0.0/boot.py /Volumes/CIRCUITPY/boot.py
+cp ./firmware_dist/KEERBE_SPLIT_1-1.0.0/layout.json /Volumes/CIRCUITPY/layout.json
+cp ./firmware_dist/KEERBE_SPLIT_1-1.0.0/utils.py /Volumes/CIRCUITPY/utils.py
+cp ./firmware_dist/KEERBE_SPLIT_1-1.0.0/constants.py /Volumes/CIRCUITPY/constants.py
+cp ./firmware_dist/KEERBE_SPLIT_1-1.0.0/config.py /Volumes/CIRCUITPY/config.py
+cp -r ./firmware_dist/KEERBE_SPLIT_1-1.0.0/lib/ /Volumes/CIRCUITPY/lib/
+cp -r ./firmware_dist/KEERBE_SPLIT_1-1.0.0/modules/ /Volumes/CIRCUITPY/modules/
+cp -r ./firmware_dist/KEERBE_SPLIT_1-1.0.0/controllers/ /Volumes/CIRCUITPY/controllers/
