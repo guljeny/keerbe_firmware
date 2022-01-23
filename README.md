@@ -1,7 +1,5 @@
-# keebee
+# keerbe firmware
 Ergonomical mechanical keyboard wtitten on circuitPython
-
-![lint](https://github.com/guljeny/keebee/actions/workflows/lint-js.yml/badge.svg)
 
 * [Requirements](#requirements)
 * [Components](#components)
@@ -52,7 +50,7 @@ Now flash firmware:
 - Connect second pico
 - Run `bin/flash`. It's upload code for right, main part
 
-> You can upgrade firmware on flashed keyboard by press `Update` button in controll software
+> You can upgrade firmware on flashed keyboard by press `Update` button in [controll software](https://github.com/guljeny/keerbe_control_app)
 
 ## Wiring
 Pico pinout. You can change it in `./constants.py`.
