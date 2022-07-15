@@ -1,7 +1,6 @@
 import usb_hid
 import usb_cdc
 import storage
-import supervisor
 from constants import ROW_PINS, COLUMN_PINS
 import digitalio
 import supervisor
@@ -17,15 +16,17 @@ button.pull = digitalio.Pull.DOWN
 storage.remount("/", readonly = False, disable_concurrent_write_protection = True)
 supervisor.disable_autoreload()
 
+print(button.value);
 
 if button.value:
     usb_cdc.enable(console=True, data=True)
-    supervisor.set_next_code_file('./flash.py')
+    supervisor.set_next_code_file('empty_run.py')
 else:
-    usb_cdc.enable(console=False, data=False)
-    usb_hid.enable((usb_hid.Device.KEYBOARD,usb_hid.Device.CONSUMER_CONTROL), boot_device = 1)
+    print('w/o button')
     storage.disable_usb_drive()
-    supervisor.set_next_code_file('./main.py')
+    usb_cdc.enable(console=True, data=True)
+    usb_hid.enable((usb_hid.Device.KEYBOARD,usb_hid.Device.CONSUMER_CONTROL), boot_device = 1)
+    supervisor.set_next_code_file('code.py')
 
 output.deinit()
 button.deinit()

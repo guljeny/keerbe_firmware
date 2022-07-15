@@ -1,6 +1,8 @@
 # keerbe firmware
 Ergonomical mechanical keyboard wtitten on circuitPython
 
+![App main screen](https://github.com/guljeny/keebee/blob/master/images/app.jpg)
+
 * [Requirements](#requirements)
 * [Components](#components)
 * [Flashing](#flasing)
@@ -12,13 +14,8 @@ Ergonomical mechanical keyboard wtitten on circuitPython
 * [Case](#case)
 * [Controll app](#controll-app)
 * [Restore keyboard](#restore-keyboard)
-
-
-## Requirements
-> Required only to build and run [controll app](#controll-app)
-
-- python3
-- node 12+
+* [Known problems](#known-problems)
+* [Contribute](#contribute)
 
 ## Components
 Buy this components:
@@ -34,7 +31,7 @@ Buy this components:
 First, install CircuitPython on picos:
 
 - Clone this repo
-- Download CP7 for your picos https://circuitpython.org/board/raspberry_pi_pico/
+- Download [CircuitPython 7.0.0](https://circuitpython.org/board/raspberry_pi_pico/)
 - Connnect first pico with pressed BOOTSEL button to pc. A new drive will show up on your computer
 - Copy downloaded CP7 file to PICO drive
 - Wait to pico loads, and when you see CIRCUITPY drive disconnect it (unplug USB cable)
@@ -50,7 +47,7 @@ Now flash firmware:
 - Connect second pico
 - Run `bin/flash`. It's upload code for right, main part
 
-> You can upgrade firmware on flashed keyboard by press `Update` button in [controll software](https://github.com/guljeny/keerbe_control_app)
+> You can upgrade firmware on flashed keyboard by press `Update` button in [controll software]($controll-app)
 
 ## Wiring
 Pico pinout. You can change it in `./constants.py`.
@@ -60,7 +57,7 @@ Wire each pin to same as schematic.
 ### Second part
 Connect beetwen both boards VCC to VCC, GND to GND and RX on main (right) board to TX on second (left) part.
 
-> I'm use 3.5mm audio jack to do this
+> I used 3.5mm audio jack to do this
 
 ### Display
 To connect display just wire VCC, GND, SCL, SDA on board and display.
@@ -78,21 +75,28 @@ Do it as you'd like, or print models from `./3d_models/`
 > Models have places for audio jack `TRS CKX3-3.5-26`, if you use another change it.
 
 ## Controll app
+App for update keyboard/change layout.
+
 ![App main screen](https://github.com/guljeny/keebee/blob/master/images/app.jpg)
 
-To change layout and update/reset keboard run it:
-
-```
-cd ./app
-npm i
-npm run build
-npm start
-```
+For more detailed information [go to app repo](https://github.com/guljeny/keerbe_control_app)
 
 ## Restore keyboard
-If keyboard not boot try to:
+Pico allows only one boot way: as keyboard or as usb drive.
+
+By default after flash firmware pico always boot as keyboard.
+
+If you have problems and want to get acces to file system of your pico:
+
 - Unplug USB cable from keyboard
-- Press top-left key on main(right) part
-- Konnect keyboard via usb (You will see CIRCUITPY drive)
-- Start software and press `Restore` button
-- Wait few minutes and try to unplug and plug USB cable
+- Connect keyboard again with pressed top left button (Y key):
+  ![Key to reset](https://github.com/guljeny/keebee/blob/master/images/key_to_reset.jpg)
+- You will see CIRCUITPY drive
+
+## Known problems
+
+- On some systems/devices keyboard can't awake your PC
+
+## Contribute
+
+Want to contribute? Welcome!

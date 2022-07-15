@@ -5,31 +5,28 @@
 """
 `rect`
 ================================================================================
-
 Various common shapes for use with displayio - Rectangle shape!
-
-
 * Author(s): Limor Fried
-
 Implementation Notes
 --------------------
-
 **Software and Dependencies:**
-
 * Adafruit CircuitPython firmware for the supported boards:
   https://github.com/adafruit/circuitpython/releases
-
 """
+
+try:
+    from typing import Optional
+except ImportError:
+    pass
 
 import displayio
 
-__version__ = "2.1.0"
+__version__ = "0.0.0-auto.0"
 __repo__ = "https://github.com/adafruit/Adafruit_CircuitPython_Display_Shapes.git"
 
 
 class Rect(displayio.TileGrid):
     """A rectangle.
-
     :param x: The x-position of the top left corner.
     :param y: The y-position of the top left corner.
     :param width: The width of the rectangle.
@@ -40,14 +37,21 @@ class Rect(displayio.TileGrid):
                     ``None`` for no outline.
     :param stroke: Used for the outline. Will not change the outer bound size set by ``width`` and
                    ``height``.
-
     """
 
-    def __init__(self, x, y, width, height, *, fill=None, outline=None, stroke=1):
+    def __init__(
+        self,
+        x: int,
+        y: int,
+        width: int,
+        height: int,
+        *,
+        fill: Optional[int] = None,
+        outline: Optional[int] = None,
+        stroke: int = 1,
+    ) -> None:
         self._bitmap = displayio.Bitmap(width, height, 2)
         self._palette = displayio.Palette(2)
-        self.width = width
-        self.height = height
 
         if outline is not None:
             self._palette[1] = outline
@@ -69,13 +73,13 @@ class Rect(displayio.TileGrid):
         super().__init__(self._bitmap, pixel_shader=self._palette, x=x, y=y)
 
     @property
-    def fill(self):
+    def fill(self) -> Optional[int]:
         """The fill of the rectangle. Can be a hex value for a color or ``None`` for
         transparent."""
         return self._palette[0]
 
     @fill.setter
-    def fill(self, color):
+    def fill(self, color: Optional[int]) -> None:
         if color is None:
             self._palette[0] = 0
             self._palette.make_transparent(0)
@@ -84,16 +88,30 @@ class Rect(displayio.TileGrid):
             self._palette.make_opaque(0)
 
     @property
-    def outline(self):
+    def outline(self) -> Optional[int]:
         """The outline of the rectangle. Can be a hex value for a color or ``None``
         for no outline."""
         return self._palette[1]
 
     @outline.setter
-    def outline(self, color):
+    def outline(self, color: Optional[int]) -> None:
         if color is None:
             self._palette[1] = 0
             self._palette.make_transparent(1)
         else:
             self._palette[1] = color
             self._palette.make_opaque(1)
+
+    @property
+    def width(self) -> int:
+        """
+        :return: the width of the rectangle in pixels
+        """
+        return self._bitmap.width
+
+    @property
+    def height(self) -> int:
+        """
+        :return: the height of the rectangle in pixels
+        """
+        return self._bitmap.height
