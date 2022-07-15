@@ -1,7 +1,7 @@
 # keerbe firmware
 Ergonomical mechanical keyboard wtitten on circuitPython
 
-![App main screen](https://github.com/guljeny/keebee/blob/master/images/app.jpg)
+![Keyboard lookup](https://github.com/guljeny/keebee/blob/master/images/keyboard_lookup.jpg)
 
 * [Requirements](#requirements)
 * [Components](#components)
