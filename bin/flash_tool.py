@@ -2,9 +2,6 @@ import sys, time, os
 import serial.tools.list_ports
 from serial import Serial
 
-board_name_selector_v1 = "Pico - CircuitPython CDC data"
-board_name_selector_v2 = "Pico - CircuitPython CDC2 data"
-
 dir = os.path.dirname(os.path.abspath(__file__))
 
 def prepare_path (path):
@@ -30,7 +27,7 @@ def scan():
     device_type = None
     try:
         for device, name, description in serial.tools.list_ports.comports():
-            if name == board_name_selector_v1 or name == board_name_selector_v2:
+            try:
                 serial_port = Serial(device)
                 serial_port.close()
                 serial_port.open()
@@ -43,6 +40,8 @@ def scan():
                     print('{"serial": "' + device + '", "type":"' + device_type + '"}')
                     sys.stdout.flush()
                     break
+            except:
+                pass
     except:
         pass
     if not device_type:

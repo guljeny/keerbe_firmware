@@ -16,13 +16,10 @@ button.pull = digitalio.Pull.DOWN
 storage.remount("/", readonly = False, disable_concurrent_write_protection = True)
 supervisor.disable_autoreload()
 
-print(button.value);
-
 if button.value:
     usb_cdc.enable(console=True, data=True)
     supervisor.set_next_code_file('empty_run.py')
 else:
-    print('w/o button')
     storage.disable_usb_drive()
     usb_cdc.enable(console=True, data=True)
     usb_hid.enable((usb_hid.Device.KEYBOARD,usb_hid.Device.CONSUMER_CONTROL), boot_device = 1)

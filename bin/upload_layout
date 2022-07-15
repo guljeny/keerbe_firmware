@@ -3,7 +3,6 @@
 import sys, time
 from flash_tool import FlashTool 
 
-print("1")
 sys.stdout.flush()
 time.sleep(0.1)
 
