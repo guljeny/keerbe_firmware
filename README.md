@@ -1,9 +1,10 @@
-# keerbe firmware
-Ergonomical mechanical keyboard wtitten on circuitPython
+# KEERBE
+Ergonomic mechanical keyboard wtitten on circuitPython.
+
+This repo contains only firmware code, controll app in [another repository](#controll-app).
 
 ![Keyboard lookup](https://github.com/guljeny/keebee/blob/master/images/keyboard_lookup.jpg)
 
-* [Requirements](#requirements)
 * [Components](#components)
 * [Flashing](#flasing)
 * [Wiring](#wiring)
@@ -30,7 +31,6 @@ Buy this components:
 ## Flashing
 First, install CircuitPython on picos:
 
-- Clone this repo
 - Download [CircuitPython 7.0.0](https://circuitpython.org/board/raspberry_pi_pico/)
 - Connnect first pico with pressed BOOTSEL button to pc. A new drive will show up on your computer
 - Copy downloaded CP7 file to PICO drive
@@ -39,6 +39,7 @@ First, install CircuitPython on picos:
 
 Now flash firmware:
 
+- Clone this repo
 - Connect first pico to pc
 - When pico loads (You will see CIRCUITPY drive) run `bin/flash_left`. It's upload code for left part
 - Wait to command finish
@@ -47,12 +48,17 @@ Now flash firmware:
 - Connect second pico
 - Run `bin/flash`. It's upload code for right, main part
 
-> You can upgrade firmware on flashed keyboard by press `Update` button in [controll software]($controll-app)
+> Next time (on flashed keyboard) you can upgrade firmware by press `Update` button in [controll software](#controll-app)
 
 ## Wiring
+It's easy, just wire pins with same names and enjoy.
+
+> You shold be careful about pin names.
+
 Pico pinout. You can change it in `./constants.py`.
 ![Pico pinot](https://github.com/guljeny/keebee/blob/master/images/pi_pico.jpg)
-Wire each pin to same as schematic.
+
+Now, wire each pin to same as schematic.
 
 ### Second part
 Connect beetwen both boards VCC to VCC, GND to GND and RX on main (right) board to TX on second (left) part.
@@ -70,7 +76,11 @@ Connect rows/columns to diodes and controller (left and right is equal)
 ![wire keys](https://github.com/guljeny/keebee/blob/master/images/eeprom.jpg)
 
 ## Case
-Do it as you'd like, or print models from `./3d_models/`
+Print models from `./3d_models/`
+
+[How this looks?](#keerbe)
+
+Or, you can do it as you'd like, with your models
 
 > Models have places for audio jack `TRS CKX3-3.5-26`, if you use another change it.
 
