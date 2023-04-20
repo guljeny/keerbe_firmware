@@ -32,7 +32,7 @@ Buy this components:
 First, install CircuitPython on picos:
 
 - Download [CircuitPython 7.0.0](https://circuitpython.org/board/raspberry_pi_pico/)
-  > Firware writed for this CP wersion, use another for your own risc!
+  > Firmware writed for this CP version, use another version for your own risc!
 - Connnect first pico with pressed BOOTSEL button to pc. A new drive will show up on your computer
 - Copy downloaded CP7 file to PICO drive
 - Wait to pico loads, and when you see CIRCUITPY drive disconnect it (unplug USB cable)
